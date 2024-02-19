@@ -67,6 +67,7 @@ func arrayValueType() {
 // simply pass the array name to the len() func
 func arrayLength() {
 	a := [...]float64{67.7, 89.8, 21, 78}
+	fmt.Println(a)
 	fmt.Println("length of array a is: ", len(a))
 }
 

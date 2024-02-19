@@ -12,6 +12,9 @@ func main() {
 	sliceSyntax2()
 	modifyingSlice()
 	modifyingSlice2()
+	sliceLenAndCap()
+	reslice()
+	appendSlice()
 }
 
 // second way to create a slice
@@ -47,6 +50,34 @@ func modifyingSlice2() {
 	branch1[0] = 90
 	fmt.Println("genesis array after modifying branch 1: ", genesisArray)
 
-	branch2[1] = 100
+	branch2[0] = 100
 	fmt.Println("genesis array after modifying branch 2: ", genesisArray)
 }
+
+// the length of a slice is the number of elements in the slice. The capacity of a slice is the number of elements in the base array, starting from the index the slice starts from, find the capacity of a slice a, you'll use the 'cap(a)' function
+func sliceLenAndCap() {
+	fruitarray := [...]string{"apple", "orange", "grape", "mango", "water melon", "pine apple", "chikoo"}
+	fruitslice := fruitarray[1:3]
+	fmt.Printf("length of slice %d capacity %d", len(fruitslice), cap(fruitslice)) //length of fruitslice is 2 and capacity is 6
+}
+
+// A slice can be re-sliced upto its capacity. Anything beyond that will cause the program to throw a run time error. so apparently you can create a slice from a slice.
+func reslice() {
+	fruitarray := [...]string{"apple", "orange", "grape", "mango", "water melon", "pine apple", "chikoo"}
+	fruitslice := fruitarray[1:3]
+	fmt.Printf("length of slice %d capacity %d\n", len(fruitslice), cap(fruitslice)) //length of is 2 and capacity is 6
+	fruitslice = fruitslice[:cap(fruitslice)]                                        //re-slicing furitslice till its capacity
+	fmt.Println("After re-slicing length is", len(fruitslice), "and capacity is", cap(fruitslice))
+}
+
+// also note, when creating a slice and you dont specify the index1 and indexend values, the indexstart is automatically set to 0, and the index end is the length of the base array.
+
+// appending slices
+func appendSlice() {
+	cars := []string{"ferrari", "Honda", "ford"} //create a slice of cars
+	fmt.Println("cars: ", cars, "previous length: ", len(cars), "previous capacity: ", cap(cars))
+	cars = append(cars, "Toyota")
+	fmt.Println("cars: ", cars, "new length: ", len(cars), "new capacity: ", cap(cars))
+}
+
+//in the above program, the capacity of cars is 3 initially. We append a new element to cars and assign the slice returned by append(cars, "Toyota") to cars again. Now the capacity of cars is doubled and becomes 6. The output of the above program is
