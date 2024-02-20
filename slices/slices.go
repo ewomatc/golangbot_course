@@ -15,6 +15,9 @@ func main() {
 	sliceLenAndCap()
 	reslice()
 	appendSlice()
+	appendNil()
+	appendTwoSlices()
+	testSubtractTwo()
 }
 
 // second way to create a slice
@@ -81,3 +84,38 @@ func appendSlice() {
 }
 
 //in the above program, the capacity of cars is 3 initially. We append a new element to cars and assign the slice returned by append(cars, "Toyota") to cars again. Now the capacity of cars is doubled and becomes 6. The output of the above program is
+
+// The zero value of a slice type is nil. A nil slice has length and capacity 0. It is possible to append values to a nil slice using the append function.
+
+func appendNil() {
+	var names []string //zero value of a slice is nil
+	if names == nil {
+		fmt.Println("slice is nil going to append")
+		names = append(names, "John", "Sebastian", "Vinay")
+		fmt.Println("names contents:", names)
+	}
+}
+
+// It is also possible to append one slice to another using the ... operator. You can learn more about this operator in the variadic functions tutorial.
+
+func appendTwoSlices() {
+	veggies := []string{"potatoes", "tomatoes", "brinjal"}
+	fruits := []string{"oranges", "apples"}
+	food := append(veggies, fruits...)
+	fmt.Println("food:", food)
+	fmt.Println(cap(food))
+}
+
+// passing slices to functions
+func subtractTwo(numbers []int) {
+	for i := range numbers {
+		numbers[i] -= 2
+	}
+}
+
+func testSubtractTwo() {
+	nums := []int{8, 7, 6}
+	fmt.Println("nums slice befor calling subtractwo on it: ", nums)
+	subtractTwo(nums)
+	fmt.Println("nums slice after passing it into the subtracttwo function: ", nums)
+}
