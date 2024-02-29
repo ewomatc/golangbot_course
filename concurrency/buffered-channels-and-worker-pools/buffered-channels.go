@@ -7,6 +7,7 @@ import (
 
 func main() {
 	useWriteToBuffer()
+	closingBufferedChannels()
 
 }
 
@@ -47,5 +48,29 @@ func useWriteToBuffer() {
 // DEADLOCK
 /*
 	note: when creating/writing to buffered chanels, there must be a goroutine running concurrently and reading data from it. If there isn't, once the capacity is reached, there will be a deadlock and the program will panic at runtime. 
+*/
+
+// CLOSING BUFFERED CHANNELS
+/*
+When we close buffered channels, we can still read data from them 'for as long as' there is still data in them. Once there is no more data in the channel, it will  return the zero value of whatever data we were trying to read
+*/
+// example
+
+func closingBufferedChannels() {
+	ch := make(chan int, 5)
+	ch <- 7
+	ch <- 8
+	close(ch)
+	// close the channel after writing 2 datas to it, it has a capacity of 5
+	// use a for-range to read data from it
+	for data := range ch{
+		fmt.Printf("recieved data %d \n", data)
+	}
+}
+
+// LENGTH VS CAPACITY OF A BUFFER
+/*
+the length of a buffer is the number of elements currently written to it, 
+while the capacity is the maximum amount of data it can hold at once
 */
 
