@@ -43,3 +43,7 @@ func useServers() {
 
 	// since server2 is the provider/goroutine for output2 and it only sleeps for 3 seconds, the select syntax will use output2
 }
+
+// DEFAULT CASE
+// The default case in a select statement is executed when none of the other cases is ready. This is generally used to prevent the select statement from blocking.
+
